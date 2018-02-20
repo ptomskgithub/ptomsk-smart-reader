@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Petroleum Trading Smart Contract Reader</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="./app.js"></script>
+</head>
+<body>
+
+<h1>Petroleum Trading Smart Contract Reader</h1>
+
+<!--<form id="get" method="get" action="#">-->
+    <!--
+    <div>
+        <input disabled="disabled" type="text" id="id_get" value="" placeholder="Enter id of contract" />
+    </div>
+
+    <div>
+        <input disabled="disabled" type="text" id="id_contract" value="" placeholder="Enter smartcontract address" />
+    </div>
+
+    <div>
+        <select disabled="disabled" id="network">
+            <option value="live">Live</option>
+            <option value="ropsten">Ropsten</option>
+        </select>
+    </div>
+    <br/>
+    -->
+
+    <!--<button id="get_contract" onclick="App.getContract($('#id_get').val(), $('#network').val(), null, true); return false;"
+            class="ladda-button" data-style="expand-right"><span class="ladda-label">Get contract</span></button>-->
+
+
+    <br/>
+    <div id="contract_not_found_holder">
+        <button id="get_contract" class="ladda-button" data-style="expand-right">Contract is loading</button>
+    </div>
+
+    <div id="contract_not_found_holder" style="display: none;">
+        <h2>Contract not found</h2>
+    </div>
+
+    <div id="contract_info_holder" style="display: none;">
+        <h2>Contract info</h2>
+        <div>
+            <span>Title:</span>
+            <span id="get_title"></span>
+        </div>
+        <br/>
+
+        <div>
+            <span>Content:</span>
+            <span id="get_content"></span>
+        </div>
+        <br/>
+
+        <br/>
+        <div>
+            <span>Signer 1:</span>
+            <span id="get_signed1"></span>
+        </div>
+        <br/>
+        <div>
+            <span>Block number 1:</span>
+            <span id="get_block1"></span>
+        </div>
+        <br/>
+
+        <div>
+            <span>Signer 2:</span>
+            <span id="get_signed2"></span>
+        </div>
+        <br/>
+        <div>
+            <span>Block number 2:</span>
+            <span id="get_block2"></span>
+        </div>
+        <br/>
+
+        <div>
+            <span>Is signed:</span>
+            <span id="is_signed"></span>
+        </div>
+        <br/>
+    </div>
+<!--</form>-->
+
+</body>
+</html>
