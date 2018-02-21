@@ -22150,8 +22150,10 @@ window.App = {
 
     var web3;
     if (network == 'live') {
+      $('#test-net').hide();
       web3 = this.create_web3('live');
     } else {
+      $('#test-net').show();
       web3 = this.create_web3('ropsten');
     }
     var ContractsStorage = __WEBPACK_IMPORTED_MODULE_2_truffle_contract___default()(__WEBPACK_IMPORTED_MODULE_3__ContractsStorage_json___default.a);

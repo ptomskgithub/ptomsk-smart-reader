@@ -48,8 +48,10 @@ window.App = {
 
     var web3;
     if (network == 'live') {
+      $('#test-net').hide();
       web3 = this.create_web3('live');
     } else {
+      $('#test-net').show();
       web3 = this.create_web3('ropsten');
     }
     var ContractsStorage = contract(contracts_storate_artifacts);
