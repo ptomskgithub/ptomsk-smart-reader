@@ -55,6 +55,7 @@ window.App = {
     var ContractsStorage = contract(contracts_storate_artifacts);
     ContractsStorage.setProvider(web3.currentProvider);
 
+    $('#contract_not_found_holder').show();
     var spinner = ladda.create(document.getElementById('get_contract'));
     spinner.start();
     ContractsStorage.at(contract_address).then(function(store) {

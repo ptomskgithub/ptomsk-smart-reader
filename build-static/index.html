@@ -5,36 +5,28 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="./app.js"></script>
+
+    <style type="text/css">
+        .clear {
+            clear: both;
+        }
+
+        .test-net {
+            color: red;
+            font-size: medium;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Petroleum Trading Smart Contract Reader</h1>
-
-<!--<form id="get" method="get" action="#">-->
-    <!--
-    <div>
-        <input disabled="disabled" type="text" id="id_get" value="" placeholder="Enter id of contract" />
-    </div>
-
-    <div>
-        <input disabled="disabled" type="text" id="id_contract" value="" placeholder="Enter smartcontract address" />
-    </div>
-
-    <div>
-        <select disabled="disabled" id="network">
-            <option value="live">Live</option>
-            <option value="ropsten">Ropsten</option>
-        </select>
-    </div>
-    <br/>
-    -->
-
-    <!--<button id="get_contract" onclick="App.getContract($('#id_get').val(), $('#network').val(), null, true); return false;"
-            class="ladda-button" data-style="expand-right"><span class="ladda-label">Get contract</span></button>-->
-
+<div class="holder" style="line-height: 68px; vertical-align: middle;">
+    <img src="./logo.png" style="float: left; margin: 10px;" />
+    <h3>Petroleum Trading Smart Contract Reader</h3>
+</div>
+<div class="clear"></div>
 
     <br/>
-    <div id="contract_not_found_holder">
+    <div id="contract_not_found_holder" style="display: none;">
         <button id="get_contract" class="ladda-button" data-style="expand-right">Contract is loading</button>
     </div>
 
@@ -43,7 +35,7 @@
     </div>
 
     <div id="contract_info_holder" style="display: none;">
-        <h2>Contract info</h2>
+        <h2>Contract info <span class="test-net">test-net</span></h2>
         <div>
             <span>Title:</span>
             <span id="get_title"></span>
