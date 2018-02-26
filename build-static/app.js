@@ -22162,6 +22162,7 @@ window.App = {
     $('#contract_not_found_holder').show();
     var spinner = ladda.create(document.getElementById('get_contract'));
     spinner.start();
+    var that = this;
     ContractsStorage.at(contract_address).then(function(store) {
         store.getContract(id).then(function (value) {
             spinner.stop();
@@ -22176,6 +22177,7 @@ window.App = {
                 $('#get_signed2').html(value[4]);
                 $('#get_block2').html(value[5].c[0]);
                 $('#is_signed').html(value[6] ? 'Yes' : 'No');
+                $('#link_to_smart').attr('href', that.get_address_link(network, contract_address));
             } else {
                 $('#contract_not_found_holder').show();
                 $('#contract_info_holder').hide();
@@ -22194,6 +22196,14 @@ window.App = {
       return new __WEBPACK_IMPORTED_MODULE_1_web3___default.a(new __WEBPACK_IMPORTED_MODULE_1_web3___default.a.providers.HttpProvider("https://mainnet.infura.io"));
     } else {
       return new __WEBPACK_IMPORTED_MODULE_1_web3___default.a(new __WEBPACK_IMPORTED_MODULE_1_web3___default.a.providers.HttpProvider("https://ropsten.infura.io"));
+    }
+  },
+
+  get_address_link: function(network_name, address) {
+    if (network_name == 'live') {
+      return 'https://etherscan.io/address/' + address.toString();
+    } else {
+      return 'https://ropsten.etherscan.io/address/' + address.toString();
     }
   }
 };
