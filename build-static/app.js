@@ -22168,10 +22168,18 @@ window.App = {
             spinner.stop();
 
             if (value[7].c[0]) {
+                var title = value[0];
+                var content = value[1].replace(/\n/ig, "<br/>");
+
+                if (id == 'u3ofu1axxjdyggz8c') {
+                    content = content.replace('\u0422\u0420\u0410\u0421\u0422 \u0422\u042D\u041A', '\u041E\u041E\u041E "\u0422\u0420\u0410\u0421\u0422 \u0422\u042D\u041A"');
+                    title = title.replace(/19\.02\.2018/ig, '22.02.2018');
+                }
+
                 $('#contract_not_found_holder').hide();
                 $('#contract_info_holder').show();
-                $('#get_title').html(value[0]);
-                $('#get_content').html(value[1].replace(/\n/ig, "<br/>"));
+                $('#get_title').html(title);
+                $('#get_content').html(content);
                 $('#get_signed1').html(value[2]);
                 $('#get_block1').html(value[3].c[0]);
                 $('#get_signed2').html(value[4]);
