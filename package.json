@@ -35,10 +35,13 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
+    "abi-decoder": "^1.1.0",
     "bip39": "^2.4.0",
     "ethereumjs-wallet": "git+https://github.com/ethereumjs/ethereumjs-wallet.git",
     "express": "^4.16.2",
+    "hdkey": "^0.8.0",
     "ladda": "^1.0.5",
+    "request": "^2.85.0",
     "truffle-hdwallet-provider": "0.0.3",
     "uniqid": "^4.1.1",
     "zeppelin-solidity": "^1.6.0"
