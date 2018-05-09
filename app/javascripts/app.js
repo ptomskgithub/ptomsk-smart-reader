@@ -359,7 +359,7 @@ function find_by_input_data(input) {
       if (data && (data['name'] == 'addContract')) {
         var id = data['params'][0]['value'];
         var title = data['params'][1]['value'];
-        var url = '/index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
+        var url = 'index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
 
         if (id == contract_id) {
           return {
@@ -372,7 +372,7 @@ function find_by_input_data(input) {
         }
       } else if (data && (data['name'] == 'signContract')) {
         var id = data['params'][0]['value'];
-        var url = '/index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
+        var url = 'index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
 
         if (id == contract_id) {
           return {
@@ -432,7 +432,7 @@ function find_by_telegram_id(telegram_id) {
       var data = decode_transation_input(trans['input']);
       if (data && (data['name'] == 'signContract')) {
         var id = data['params'][0]['value'];
-        var url = '/index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
+        var url = 'index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
         contracts.push({
           'id': id,
           'url': url,
@@ -478,7 +478,7 @@ function find_by_text(str) {
         var id = data['params'][0]['value'];
         var title = data['params'][1]['value'].toLowerCase();
         var content = data['params'][2]['value'].toLowerCase();
-        var url = '/index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
+        var url = 'index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
 
         if ((title.indexOf(search) > -1) || (content.indexOf(search) > -1)) {
           return {
