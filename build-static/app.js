@@ -62149,28 +62149,6 @@ function is_input_data(str) {
 }
 
 
-function get_transaction(network, hash) {
-  if (network == 'live') {
-    var domain = 'http://api.etherscan.io';
-  } else {
-    var domain = 'http://ropsten.etherscan.io';
-  }
-  var url = domain + '/api?module=transaction&action=gettxreceiptstatus&txhash=' + hash.toString() + '&apikey=YourApiKeyToken';
-  return new Promise(function (resolve, reject) {
-    request.get({
-      url: url,
-      json: true,
-    }, (err, res, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data['result']);
-      }
-    });
-  });
-}
-
-
 function get_transaction_data(network, hash) {
   return new Promise(function (resolve, reject) {
     var web = create_web3(network);
@@ -62265,9 +62243,9 @@ function get_contract_address(telegram_id) {
 
 function get_transactions(network, address) {
   if (network == 'live') {
-    var domain = 'http://api.etherscan.io';
+    var domain = 'https://api.etherscan.io';
   } else {
-    var domain = 'http://ropsten.etherscan.io';
+    var domain = 'https://ropsten.etherscan.io';
   }
   var url = domain + '/api?module=account&action=txlist&address=' + address.toString() + '&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken';
   return new Promise(function (resolve, reject) {
