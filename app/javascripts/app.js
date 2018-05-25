@@ -82,9 +82,9 @@ function show_contract(id, network, contract_address) {
         $('#contract_info_holder').show();
         $('#get_title').html(value[0]);
         $('#get_content').html(value[1].replace(/\n/ig, "<br/>"));
-        $('#get_signed1').html(value[2]);
+        $('#get_signed1').html(get_company_name(value[2]));
         $('#get_block1').html(value[3].c[0]);
-        $('#get_signed2').html(value[4]);
+        $('#get_signed2').html(get_company_name(value[4]));
         $('#get_block2').html(value[5].c[0]);
         $('#is_signed').html(value[6] ? 'Yes' : 'No');
         $('#link_to_smart').attr('href', get_address_link(network, contract_address));
@@ -207,6 +207,31 @@ function get_extended_public_key(network) {
 }
 
 
+var TELEGRAM_TO_NAME = {
+  29440899: 'Петролеум Трейдинг',
+  433716510: 'Ромашка',
+  524224540: 'РС-ОйлОпт',
+  510689101: 'ООО "ТРАСТ ТЭК"',
+  468972296: 'ООО Управление АЗС'
+};
+var ADDRESS_TO_NAME = {};
+var wallet = get_wallet_from_telegram_id('live', 0);
+ADDRESS_TO_NAME[get_public_key(wallet).toLowerCase()] = 'Петролеум Трейдинг';
+var wallet = get_wallet_from_telegram_id('ropsten', 0);
+ADDRESS_TO_NAME[get_public_key(wallet).toLowerCase()] = 'Петролеум Трейдинг';
+
+for (var id in TELEGRAM_TO_NAME) {
+  var name = TELEGRAM_TO_NAME[id];
+  var address = get_contract_address(id);
+  ADDRESS_TO_NAME[address.toLowerCase()] = name;
+}
+
+
+function get_company_name(address) {
+  return ADDRESS_TO_NAME[address.toLowerCase()] || address;
+}
+
+
 function get_address_indexes(number) {
   var BASE = 1000000;
   var parts = [];
@@ -271,7 +296,7 @@ window.addEventListener('load', function () {
 });
 
 
-$(document).on('submit', '#search_form', function(){
+$(document).on('submit', '#search_form', function () {
   var str = $('#search_toolbar_input').val();
   do_search(str);
   return false;
@@ -395,7 +420,7 @@ function find_by_input_data(input) {
       get_transactions('live', live_address),
       get_transactions('ropsten', ropsten_address)
     ];
-    Promise.all(promises).then(function(res) {
+    Promise.all(promises).then(function (res) {
       var contract;
       var trans_live = res[0];
       var trans_ropsten = res[1];
@@ -468,7 +493,7 @@ function find_by_text(str) {
     get_transactions('live', live_address),
     get_transactions('ropsten', ropsten_address)
   ];
-  Promise.all(promises).then(function(res){
+  Promise.all(promises).then(function (res) {
     var trans_live = res[0];
     var trans_ropsten = res[1];
 
@@ -493,7 +518,7 @@ function find_by_text(str) {
     }
 
     var contracts = [];
-    for(var i in trans_live) {
+    for (var i in trans_live) {
       var trans = trans_live[i];
       var res = process_trans('live', trans);
       if (res) {
@@ -501,7 +526,7 @@ function find_by_text(str) {
       }
     }
 
-    for(var i in trans_ropsten) {
+    for (var i in trans_ropsten) {
       var trans = trans_ropsten[i];
       var res = process_trans('ropsten', trans);
       if (res) {
