@@ -62174,6 +62174,7 @@ function create_web3(network_name) {
 
 function decode_transation_input(input) {
   return abiDecoder.decodeMethod(input);
+  //return decoder.decodeData(input);
 }
 
 
@@ -62378,7 +62379,7 @@ function find_by_input_data(input) {
     for (var i in transactions) {
       var trans = transactions[i];
       var data = decode_transation_input(trans['input']);
-      if (data && (data['name'] == 'addContract')) {
+      if (data && (data['name'] === 'addContract')) {
         var id = data['params'][0]['value'];
         var title = data['params'][1]['value'];
         var url = 'index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
@@ -62392,7 +62393,7 @@ function find_by_input_data(input) {
             'contract_address': trans['to'],
           };
         }
-      } else if (data && (data['name'] == 'signContract')) {
+      } else if (data && (data['name'] === 'signContract')) {
         var id = data['params'][0]['value'];
         var url = 'index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
 
@@ -62445,23 +62446,46 @@ function find_by_telegram_id(telegram_id) {
   var spinner = ladda.create(document.getElementById('search_button'));
   spinner.start();
   var network = get_network_name(telegram_id);
-  var contract_address = get_contract_address(telegram_id);
+  var contract_address = get_contract_address(telegram_id).toLowerCase();
+  var main_address = get_public_key(get_wallet_from_telegram_id(network, 0));
 
   var contracts = [];
-  get_transactions(network, contract_address).then(function (transactions) {
-    for (var i in transactions) {
-      var trans = transactions[i];
+  Promise.all([
+    get_transactions(network, main_address),
+    get_transactions(network, contract_address),
+  ]).then(function (res) {
+    var main_transactions = res[0];
+    var client_transactions = res[1];
+
+    // get contract addresses
+    var contract_addresses = [];
+    for (var i in client_transactions) {
+      var trans = client_transactions[i];
       var data = decode_transation_input(trans['input']);
-      if (data && (data['name'] == 'signContract')) {
-        var id = data['params'][0]['value'];
-        var url = 'index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
-        contracts.push({
-          'id': id,
-          'url': url,
-          'network': network,
-          'contract_address': trans['to'],
-          'title': ''
-        });
+      if (data && (data['name'] === 'signContract')) {
+        if (contract_addresses.indexOf(trans['to'].toLowerCase()) === -1) {
+          contract_addresses.push(trans['to'].toLowerCase());
+        }
+      }
+    }
+
+    if (contract_addresses.length) {
+      for (var i in main_transactions) {
+        var trans = main_transactions[i];
+        var data = decode_transation_input(trans['input']);
+
+        if (data && (data['name'] === 'addContract') && (contract_addresses.indexOf(trans['to'].toLowerCase()) !== -1)) {
+          var id = data['params'][0]['value'];
+          var title = data['params'][1]['value'];
+          var url = 'index.html?id=' + id + '&network=' + network + '&contract_address=' + trans['to'];
+          contracts.push({
+            'id': id,
+            'url': url,
+            'network': network,
+            'contract_address': trans['to'],
+            'title': title
+          });
+        }
       }
     }
 
@@ -62496,7 +62520,7 @@ function find_by_text(str) {
 
     function process_trans(network, trans) {
       var data = decode_transation_input(trans['input']);
-      if (data && (data['name'] == 'addContract')) {
+      if (data && (data['name'] === 'addContract')) {
         var id = data['params'][0]['value'];
         var title = data['params'][1]['value'].toLowerCase();
         var content = data['params'][2]['value'].toLowerCase();
